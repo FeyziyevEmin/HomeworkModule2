@@ -30,7 +30,9 @@ public class Main {
 
         List<User> users = Arrays.asList(u1, u2, u3);
 
-        //1
+
+
+                   //1
 
         Comparator<Book> comparator = Comparator
                 .comparing(Book::getRating)
@@ -38,12 +40,17 @@ public class Main {
                 .thenComparing(Book::getYear)
                 .thenComparing(Book::getTitle);
 
+        List<Book> sortedBooks = new ArrayList<>(books);
+        sortedBooks.sort(comparator);
+
         System.out.println("Sorted Books");
-        books.forEach(System.out::println);
+        sortedBooks.forEach(System.out::println);
         System.out.println(" ");
         System.out.println("Library Analysis");
 
-        //2
+
+
+                 //2
 
         double averageRating = books.stream()
                 .mapToDouble(Book::getRating)
@@ -58,7 +65,9 @@ public class Main {
         System.out.println("  ");
         System.out.println("The most downloaded book by all users");
 
-        //3
+
+
+                 //3
 
         Map<String, Long> borrowCount = users.stream()
                 .flatMap(user -> user.getBorrowHistory().stream())
@@ -74,7 +83,9 @@ public class Main {
         System.out.println(" ");
         System.out.println("Currently reading");
 
-        //4
+
+
+                 //4
 
         Map<String, List<Book>> currentlyReading = users.stream()
                 .collect(Collectors.toMap(User::getName,
@@ -82,12 +93,14 @@ public class Main {
                                 .stream()
                                 .filter(borrowRecord -> !borrowRecord.isReturned())
                         .map(BorrowRecord::getBook)
-                        .toList()));
+                        .collect(Collectors.toList())));
         System.out.println("Currently reading: " + "\n" + currentlyReading);
         System.out.println(" ");
         System.out.println("Books grouped by author (after 1950)");
 
-        //5
+
+
+                 //5
 
         Map<String, List<Book>> booksByAuthor = books.stream()
                 .filter(book -> book.getYear() > 1950)
