@@ -1,4 +1,4 @@
-package org.example.lesson16.Practice;
+package org.example.lesson_16.Practice;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

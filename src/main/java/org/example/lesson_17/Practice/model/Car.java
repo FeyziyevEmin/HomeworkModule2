@@ -1,8 +1,11 @@
-package org.example.lesson16.Practice;
+package org.example.lesson_17.Practice.model;
 
 public class Car {
+    private String name;
     private String color;
     private int speed;
+    private int id;
+    private String dbCode;
 
     public Car(String color, int speed) {
         this.color = color;
@@ -25,11 +28,19 @@ public class Car {
         this.speed = speed;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "color='" + color + '\'' +
-                ", speed=" + speed +
-                '}';
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDbCode() {
+        return dbCode;
+    }
+
+    public void setDbCode(String dbCode) {
+        this.dbCode = dbCode;
     }
 }

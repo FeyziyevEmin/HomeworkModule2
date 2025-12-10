@@ -12,7 +12,9 @@ repositories {
 
 ext {
     set('jakartaVersion', '6.1.0-M2')
-    set('jUnitVersion','5.10.2')
+    set('jUnitVersion', '5.10.2')
+    set("postgresVersion", "42.7.4")
+    set("hikariCPVersion", "6.2.1")
 }
 
 jar {
@@ -22,6 +24,10 @@ jar {
 }
 
 dependencies {
+
+    implementation group: 'com.zaxxer', name: 'HikariCP', version: "${hikariCPVersion}"
+    implementation group: 'org.postgresql', name: 'postgresql', version: "${postgresVersion}"
+
     // Align all JUnit 5 & Platform versions
     testImplementation platform('org.junit:junit-bom:5.10.2')
 
@@ -39,9 +45,9 @@ dependencies {
 
     testImplementation 'org.junit.jupiter:junit-jupiter'
 
-    dependencies {
-        implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
-    }
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+
 }
 
 test {
@@ -66,8 +72,7 @@ tasks.named('war', War) {
 }
 
 
-
-tasks.register("firstTask"){
+tasks.register("firstTask") {
     print("Hello Gradle Task")
 }
 
