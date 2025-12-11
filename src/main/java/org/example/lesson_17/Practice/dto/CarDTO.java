@@ -1,7 +1,7 @@
 package org.example.lesson_17.Practice.dto;
 
 public class CarDTO {
-    public class CarDto {
+    public static class CarDto {
         private String color;
         private int speed;
         private int id;
@@ -79,9 +79,9 @@ public class CarDTO {
                 return this;
             }
 
-//            public  CarDto build() {
-//                return new CarDto(this);
-//            }
+            public  CarDto build() {
+                return new CarDto(this);
+            }
 
         }
 
