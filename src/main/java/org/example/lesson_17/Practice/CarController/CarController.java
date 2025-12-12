@@ -14,6 +14,7 @@ import org.example.lesson_17.Practice.service.CarServiceImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Writer;
 
 @WebServlet(name = "CarController", urlPatterns = "/cars")
 public class CarController extends HttpServlet {
@@ -65,5 +66,65 @@ public class CarController extends HttpServlet {
         CarDTO.CarDto CarDto = OBJECT_MAPPER.readValue(sb.toString(), CarDTO.CarDto.class);
         carService.addCar(CarDto);
         resp.setStatus(201);
+    }
+
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        var params = req.getParameterMap();
+        try {
+            if (id == null) {
+                resp.setStatus(400);
+                resp.getWriter().println("Invalid ID");
+                return;
+            }
+
+            StringBuffer sb = new StringBuffer();
+            try (BufferedReader bufferedReader = req.getReader()) {
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+            }
+
+            CarDTO.CarDto updatedCar = OBJECT_MAPPER.readValue(sb.toString(), CarDTO.CarDto.class);
+
+            carService.updateCar(Integer.parseInt(id), updatedCar);
+
+            resp.setStatus(200);
+            resp.getWriter().println("Car Updated successfully");
+
+        } catch (Exception exception) {
+            if (exception instanceof CarNotFoundException) {
+                resp.setStatus(404);
+                System.out.println("Car not found");
+            } else {
+                resp.setStatus(500);
+                System.out.println("Internal Server Error");
+            }
+        }
+    }
+
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        try {
+            if (id == null) {
+                resp.setStatus(400);
+                resp.getWriter().println("Invalid ID");
+                return;
+            }
+
+            carService.deleteCarById(Integer.parseInt(id));
+            resp.setStatus(204);
+
+        } catch (Exception exception) {
+            if (exception instanceof CarNotFoundException) {
+                resp.setStatus(404);
+            } else {
+                resp.setStatus(500);
+                System.out.println("Internal Server Error");
+            }
+        }
+
+
     }
 }
